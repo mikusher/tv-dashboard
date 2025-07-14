@@ -209,27 +209,8 @@ TRAEFIK_DOMAIN=tv.example.com
 make docker
 ```
 
-### ☁️ **Fly.io (Recomendado - Free)**
-```bash
-# Setup completo automático
-make fly-setup
-
-# Ou manual:
-make fly-install    # Instalar CLI
-make fly-auth       # Login
-make fly-create     # Criar app
-make fly-deploy     # Deploy
-make fly-open       # Abrir browser
-```
-
-**Vantagens Fly.io:**
-- ✅ **Free tier**: 256MB RAM (usa apenas 7.6MB!)
-- ✅ **Global CDN**: Edge locations mundiais
-- ✅ **HTTPS automático**: Certificados SSL gratuitos
-- ✅ **Deploy simples**: 1 comando
-- ✅ **Monitoramento**: Health checks automáticos
-
-📖 **Guia completo**: [FLY-DEPLOY.md](FLY-DEPLOY.md)
+### ☁️ **Deploy em Nuvem**
+O projeto está configurado para deploy automático em plataformas de nuvem.
 
 ### 🖥️ **Servidor Tradicional**
 ```bash
@@ -290,64 +271,19 @@ make clean          # Limpeza básica
 make clean-all      # Limpeza completa
 ```
 
-## 🔄 GitHub Actions CI/CD
+## 🌐 Demonstração Online
 
-### 📋 **Workflow Automático**
+- **🔗 Site**: https://tv-dashboard.fly.dev/
+- **📱 Responsivo**: Funciona em desktop, tablet e mobile
+- **🔄 Atualização**: Site atualizado automaticamente
 
-O projeto possui um workflow GitHub Actions que:
+## 📝 Características Técnicas
 
-1. **🔍 Trigger**: Ativa em commits para `main` ou `master`
-2. **🚀 Deploy**: Faz deploy automático no Fly.io
-3. **✅ Tests**: Executa testes de health check
-4. **📊 Status**: Atualiza badges no README
-
-### 🔧 **Configuração GitHub**
-
-```bash
-# 1. Criar repositório no GitHub
-gh repo create tv-dashboard --public
-
-# 2. Adicionar remote
-git remote add origin https://github.com/mikusher/tv-dashboard.git
-
-# 3. Configurar secrets (necessário)
-# No GitHub: Settings → Secrets → Actions
-# Adicionar: FLY_API_TOKEN (token do Fly.io)
-
-# 4. Primeiro push
-git add .
-git commit -m "🚀 Initial commit - TV Dashboard"
-git push -u origin main
-```
-
-### 🔑 **Secrets Necessários**
-
-Para o GitHub Actions funcionar, configure:
-
-| Secret | Valor | Descrição |
-|--------|-------|-----------|
-| `FLY_API_TOKEN` | `fly_xxxxx` | Token de autenticação do Fly.io |
-
-**Obter token Fly.io:**
-```bash
-fly auth token
-```
-
-### 📈 **Monitoramento Deploy**
-
-- **Actions**: https://github.com/mikusher/tv-dashboard/actions
-- **Live Site**: https://tv-dashboard.fly.dev/
-- **Health Check**: https://tv-dashboard.fly.dev/health
-
-## 📝 Notas Técnicas
-
-- **🎬 Otimizado para TV**: Headers CORS e timeouts específicos para streams
-- **🔄 CI/CD**: Deploy automático a cada commit
-- **🌐 Global**: CDN e edge locations via Fly.io
-- **⚡ Performance**: Gzip, cache, e nginx tuning profissional  
-- **🔒 Segurança**: Headers completos e proteções ativas
-- **📦 Containerizado**: Docker com configuração dinâmica via ENV
-- **🔧 Configurável**: 50+ variáveis de ambiente para personalização
+- **🎬 Otimizado para TV**: Configurações específicas para streaming
+- **⚡ Performance**: Otimizações de cache e compressão
+- **🔒 Segurança**: Headers de segurança implementados
+- **📦 Containerizado**: Suporte completo Docker
+- **🔧 Configurável**: Múltiplas opções de personalização
 - **🌐 Proxy-ready**: Suporte nativo para Traefik e nginx-proxy
 - **⚡ Makefile**: Automação completa de desenvolvimento e deploy
 

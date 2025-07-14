@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,79 +12,79 @@
     <header class="header">
         <div class="header-left">
             <button class="toggle-sidebar-header" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
-            <h1>📺 TV Dashboard - Auto Deploy</h1>
+            <h1>📺 TV Dashboard</h1>
         </div>
         <div class="controls">
-            <button class="btn" onclick="openConfigModal()">⚙️ Configurações</button>
-            <button class="btn" onclick="toggleMaximizeAll()">Maximizar Tudo</button>
+            <button class="btn" onclick="openConfigModal()">⚙️ Settings</button>
+            <button class="btn" onclick="toggleMaximizeAll()">Maximize All</button>
         </div>
     </header>
 
-    <!-- Modal de Configuração -->
+    <!-- Settings Modal -->
     <div class="config-modal" id="configModal">
         <div class="config-content">
             <div class="config-header">
-                <h2>⚙️ Configurações</h2>
+                <h2>⚙️ Settings</h2>
                 <button class="config-close" onclick="closeConfigModal()">✕</button>
             </div>
             
             <div class="config-tabs">
-                <button class="config-tab active" onclick="showConfigTab('channels')">Canais</button>
-                <button class="config-tab" onclick="showConfigTab('add')">Adicionar Canal</button>
-                <button class="config-tab" onclick="showConfigTab('settings')">Configurações</button>
+                <button class="config-tab active" onclick="showConfigTab('channels')">Channels</button>
+                <button class="config-tab" onclick="showConfigTab('add')">Add Channel</button>
+                <button class="config-tab" onclick="showConfigTab('settings')">Settings</button>
             </div>
 
             <div class="config-body">
-                <!-- Painel de Canais -->
+                <!-- Channels Panel -->
                 <div id="channels-panel" class="config-panel active">
-                    <h3>Gerenciar Canais</h3>
+                    <h3>Manage Channels</h3>
                     <div class="channel-list" id="channelList">
-                        <!-- Canais serão listados aqui -->
+                        <!-- Channels will be listed here -->
                     </div>
                 </div>
 
-                <!-- Painel de Adicionar Canal -->
+                <!-- Add Channel Panel -->
                 <div id="add-panel" class="config-panel">
-                    <h3>Adicionar Novo Canal</h3>
-                    <form id="addChannelForm">
+                    <h3>Add New Channel</h3>
+                                        <form id="addChannelForm">
                         <div class="form-group">
-                            <label>Nome do Canal:</label>
-                            <input type="text" id="channelName" placeholder="Ex: RTP1">
+                            <label>Channel Name:</label>
+                            <input type="text" id="channelName" placeholder="Ex: CNN">
                         </div>
                         <div class="form-group">
-                            <label>URL do Stream:</label>
-                            <input type="text" id="channelUrl" placeholder="https://exemplo.com/stream.m3u8">
+                            <label>Stream URL:</label>
+                            <input type="text" id="channelUrl" placeholder="https://example.com/stream.m3u8">
                         </div>
                         <div class="form-group">
-                            <label>País:</label>
-                            <input type="text" id="channelCountry" placeholder="Portugal">
+                            <label>Country:</label>
+                            <input type="text" id="channelCountry" placeholder="United States">
                         </div>
                         <div class="form-group">
-                            <label>Categoria:</label>
+                            <label>Category:</label>
                             <select id="channelCategory">
-                                <option value="Notícias">Notícias</option>
-                                <option value="Generalistas">Generalistas</option>
-                                <option value="Esportes">Esportes</option>
-                                <option value="Entretenimento">Entretenimento</option>
-                                <option value="Documentários">Documentários</option>
+                                <option value="News">News</option>
+                                <option value="General">General</option>
+                                <option value="Sports">Sports</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Documentary">Documentary</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Descrição (opcional):</label>
-                            <textarea id="channelDescription" placeholder="Descrição do canal..."></textarea>
+                            <label>Description (optional):</label>
+                            <textarea id="channelDescription" placeholder="Channel description..."></textarea>
                         </div>
                         <div style="display: flex; gap: 10px;">
-                            <button type="button" class="btn" onclick="addChannel()">Adicionar Canal</button>
-                            <button type="button" class="btn" onclick="clearChannelForm()" style="background: #6c757d;">Limpar</button>
+                        <button type="button" class="btn" onclick="addChannel()">Add Channel</button>
+                            <button type="button" class="btn" onclick="clearChannelForm()" style="background: #6c757d;">Clear</button>
                         </div>
                     </form>
                 </div>
 
-                <!-- Painel de Configurações -->
+                <!-- Settings Panel -->
                 <div id="settings-panel" class="config-panel">
-                    <h3>Configurações Gerais</h3>
+                    <h3>General Settings</h3>
                     <div class="form-group">
-                        <label>Layout da Grade:</label>
+                        <label>Grid Layout:</label>
                         <select id="gridLayout" onchange="changeGridLayout()">
                             <option value="4x4">4x4 (16 players)</option>
                             <option value="3x3">3x3 (9 players)</option>
@@ -94,27 +94,27 @@
                     <div class="form-group">
                         <label>Autoplay:</label>
                         <select id="autoplayMode">
-                            <option value="muted">Autoplay Mutado</option>
-                            <option value="off">Desligado</option>
+                            <option value="muted">Autoplay Muted</option>
+                            <option value="off">Off</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Tema:</label>
+                        <label>Theme:</label>
                         <select id="themeMode" onchange="changeTheme()">
-                            <option value="dark">Escuro</option>
-                            <option value="light">Claro</option>
+                            <option value="dark">Dark</option>
+                            <option value="light">Light</option>
                         </select>
                     </div>
                     
                     <hr style="margin: 20px 0; border-color: #333;">
                     
-                    <h3>Backup e Restauração</h3>
+                    <h3>Backup & Restore</h3>
                     <div class="form-group">
-                        <label>Gerenciar Dados:</label>
+                        <label>Manage Data:</label>
                         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <button class="btn" onclick="exportData()">📤 Exportar Dados</button>
-                            <button class="btn" onclick="importData()">📥 Importar Dados</button>
-                            <button class="btn" onclick="clearAllData()" style="background: #dc3545;">🗑️ Limpar Todos os Dados</button>
+                            <button class="btn" onclick="exportData()">📤 Export Data</button>
+                            <button class="btn" onclick="importData()">📥 Import Data</button>
+                            <button class="btn" onclick="clearAllData()" style="background: #dc3545;">🗑️ Clear All Data</button>
                         </div>
                     </div>
                     
@@ -123,8 +123,8 @@
             </div>
 
             <div class="config-actions">
-                <button class="btn" onclick="saveConfig()">Salvar Configurações</button>
-                <button class="btn" onclick="closeConfigModal()">Fechar</button>
+                <button class="btn" onclick="saveConfig()">Save Settings</button>
+                <button class="btn" onclick="closeConfigModal()">Close</button>
             </div>
         </div>
     </div>
@@ -132,14 +132,14 @@
     <div class="main-container">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <h3>Canais Disponíveis</h3>
+                <h3>Available Channels</h3>
             </div>
 
             <div class="category-section">
-                <div class="category-title">🇵🇹 Portugal - Notícias</div>
-                <div class="channel-item" onclick="loadChannel('SIC Notícias', 'https://d277k9d1h9dro4.cloudfront.net/out/v1/293e7c3464824cbd8818ab8e49dc5fe9/index.m3u8', 'PT')">
+                <div class="category-title">🇵🇹 Portugal - News</div>
+                <div class="channel-item" onclick="loadChannel('SIC News', 'https://d277k9d1h9dro4.cloudfront.net/out/v1/293e7c3464824cbd8818ab8e49dc5fe9/index.m3u8', 'PT')">
                     <div class="channel-flag">🇵🇹</div>
-                    <span>SIC Notícias</span>
+                    <span>SIC News</span>
                 </div>
                 <div class="channel-item" onclick="loadChannel('SIC', 'https://d1zx6l1dn8vaj5.cloudfront.net/out/v1/b89cc37caa6d418eb423cf092a2ef970/index_4.m3u8', 'PT')">
                     <div class="channel-flag">🇵🇹</div>
@@ -156,7 +156,7 @@
             </div>
 
             <div class="category-section">
-                <div class="category-title">🇵🇹 Portugal - Generalistas</div>
+                <div class="category-title">🇵🇹 Portugal - General</div>
                 <div class="channel-item" onclick="loadChannel('RTP2', 'https://streaming-live.rtp.pt/liverepeater/smil:rtp2HD.smil/playlist.m3u8', 'PT')">
                     <div class="channel-flag">🇵🇹</div>
                     <span>RTP2</span>
@@ -172,7 +172,7 @@
             </div>
 
             <div class="category-section">
-                <div class="category-title">🇬🇧 Reino Unido</div>
+                <div class="category-title">🇬🇧 United Kingdom</div>
                 <div class="channel-item" onclick="loadChannel('BBC News', 'https://vs-hls-push-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/iptv_hd_abr_v1.m3u8', 'GB')">
                     <div class="channel-flag">🇬🇧</div>
                     <span>BBC News</span>
@@ -186,13 +186,13 @@
 
         <main class="grid-container">
             <div class="grid" id="grid">
-                <!-- Player boxes serão adicionados dinamicamente -->
+                <!-- Player boxes will be added dynamically -->
             </div>
         </main>
     </div>
 
     <div class="audio-control" id="audioControl">
-        🔇 Sem áudio ativo
+        🔇 No active audio
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.18.1/video.min.js"></script>

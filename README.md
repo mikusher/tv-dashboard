@@ -1,207 +1,183 @@
 # 📺 TV Dashboard - Professional Edition
 
-Sistema profissional para monitoramento de múltiplos canais de TV com configurações avançadas de servidor e deploy automático via GitHub Actions.
+Professional system for monitoring multiple TV channels with advanced server configurations and automatic deployment via GitHub Actions.
 
 [![Deploy to Fly.io](https://github.com/mikusher/tv-dashboard/actions/workflows/deploy.yml/badge.svg)](https://github.com/mikusher/tv-dashboard/actions/workflows/deploy.yml)
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://tv-dashboard.fly.dev/)
 
-## 🌐 Deploy Automático
+## 🌐 Automatic Deployment
 
-O projeto possui integração contínua com GitHub Actions que faz deploy automático no Fly.io a cada commit na branch main.
+The project has continuous integration with GitHub Actions that automatically deploys to Fly.io with every commit to the main branch.
 
-**🔗 Acesso Direto:** https://tv-dashboard.fly.dev/
+**🔗 Direct Access:** https://tv-dashboard.fly.dev/
 
-## 🚀 Execução Super Simples com Makefile
+## 🚀 Super Simple Execution with Makefile
 
-### ⚡ **Comandos Principais**
+### ⚡ **Main Commands**
 ```bash
-# Ver todos os comandos disponíveis
+# See all available commands
 make help
 
-# Desenvolvimento local
-make dev              # Servidor local porta 8080
-make dev PORT=3000    # Servidor local porta customizada
+# Local development
+make dev              # Local server port 8080
+make dev PORT=3000    # Local server custom port
 
-# Docker (Produção)
+# Docker (Production)
 make docker           # Build + run + health check
-make up               # Iniciar containers
-make down             # Parar containers
+make up               # Start containers
+make down             # Stop containers
 
-# Monitoramento
-make status           # Status dos containers
+# Monitoring
+make status           # Container status
 make health           # Health check
-make test             # Teste completo da aplicação
-make logs             # Logs em tempo real
+make test             # Complete application test
+make logs             # Real-time logs
 ```
 
-### 🔧 **Setup Rápido**
+### 🔧 **Quick Setup**
 ```bash
-# Primeira vez
+# First time
 git clone <repo>
 cd tv-dashboard
-make docker          # Setup completo automático!
+make docker          # Complete automatic setup!
 ```
 
-## 📋 **Todos os Comandos Makefile**
+## 📋 **All Makefile Commands**
 
-### 🔧 **Desenvolvimento Local**
+### 🔧 **Local Development**
 ```bash
-make install          # Copiar .env
-make dev              # Servidor local
-make build            # Build para dist/
-make start            # Alias para make dev
+make install          # Copy .env
+make dev              # Local server
+make build            # Build to dist/
+make start            # Alias for make dev
 ```
 
 ### 🐳 **Docker**
 ```bash
-make docker           # Build + run completo
-make up               # Iniciar containers
-make down             # Parar containers  
-make restart          # Reiniciar containers
-make logs             # Ver logs (-f)
+make docker           # Complete build + run
+make up               # Start containers
+make down             # Stop containers  
+make restart          # Restart containers
+make build-docker     # Build image only
+make run-docker       # Run container only
 ```
 
-### 📊 **Monitoramento**
+### 📊 **Monitoring**
 ```bash
-make status           # Status + uso de recursos
+make status           # Container status
 make health           # Health check
-make test             # Teste completo (página + health + headers)
-make deploy           # Deploy + teste automático
+make test             # Test application
+make logs             # Real-time logs
 ```
 
-### 🧹 **Limpeza**
+### 🧹 **Cleanup**
 ```bash
-make clean            # Limpar builds + containers
-make clean-all        # Limpeza completa (networks, volumes)
+make clean            # Basic cleanup
+make clean-all        # Complete cleanup (networks, volumes)
 ```
 
-### ⚡ **Atalhos Rápidos**
+### 🚁 **Fly.io**
 ```bash
-make d                # = make docker
-make u                # = make up  
-make s                # = make status
-make l                # = make logs
-make h                # = make health
-make c                # = make clean
+make fly-setup        # Complete Fly.io setup (install + auth + create + deploy)
+make fly-deploy       # Deploy to Fly.io
+make fly-status       # Application status
+make fly-logs         # Fly.io logs
 ```
 
-## ⚙️ Configurações Profissionais
-
-### Arquivo `.env` - Configuração Completa
-
-#### 🏗️ **Aplicação**
-```env
-APP_NAME="TV Dashboard"
-APP_VERSION="1.0.0"
-APP_ENV="production"  # production|development
+### 🐙 **GitHub CI/CD**
+```bash
+make github-setup     # Configure GitHub repository
+make github-push      # First commit and push
+make git-deploy       # Commit + push (trigger deploy)
+make fly-token        # Get token for GitHub Secrets
+make github-status    # View GitHub Actions status
 ```
 
-#### 🌐 **Servidor & Nginx**
-```env
-PORT=8080  # Porta externa
-NGINX_WORKER_CONNECTIONS=1024
-NGINX_CLIENT_MAX_BODY_SIZE=100M
-NGINX_KEEPALIVE_TIMEOUT=65
-NGINX_GZIP_ENABLED=on
+### 📖 **Examples**
+```bash
+make dev PORT=3000    # Local server on port 3000
+make docker           # Complete deploy
 ```
 
-#### 🎯 **TV Streaming**
-```env
-STREAM_CONNECTION_TIMEOUT=30
-STREAM_MAX_RETRIES=3
-STREAM_RETRY_DELAY=5000
-CORS_ENABLED=true
-CORS_ALLOWED_ORIGINS="*"
+## ⚙️ **Configuration**
+
+### 🔧 **Environment Variables**
+Copy and customize the `.env` file:
+```bash
+cp env.example .env
 ```
 
-#### 🔒 **Segurança**
-```env
-SECURITY_HEADERS_ENABLED=true
-X_FRAME_OPTIONS=DENY
-X_CONTENT_TYPE_OPTIONS=nosniff
-X_XSS_PROTECTION="1; mode=block"
-SERVER_TOKENS=off
-```
+### 📝 **Main Settings**
+```bash
+# Server
+PORT=8080                   # Server port
+HOST=0.0.0.0               # Server host
 
-#### 📊 **Cache & Performance**
-```env
-STATIC_ASSETS_CACHE=1y
-HTML_CACHE_CONTROL="no-cache, no-store, must-revalidate"
-NGINX_GZIP_ENABLED=on
-```
+# Docker
+DOCKER_PORT=8080           # Docker port
+DOCKER_HOST=0.0.0.0        # Docker host
 
-#### 📝 **Logging**
-```env
-LOG_LEVEL=info
-LOG_FORMAT=combined
-LOG_ACCESS_ENABLED=true
-LOG_ERROR_ENABLED=true
-```
+# Application
+APP_NAME=TV Dashboard      # Application name
+APP_VERSION=1.0.0          # Version
+APP_ENV=production         # Environment
 
-#### 🔧 **Traefik (Proxy Reverso)**
-```env
-TRAEFIK_ENABLE=true
-TRAEFIK_DOMAIN=tv-dashboard.local
-TRAEFIK_SERVICE_PORT=80
-```
-
-### 🎮 **Configurações da Aplicação**
-```env
+# Default Settings
 DEFAULT_GRID_LAYOUT=4x4     # 2x2|3x3|4x4
 DEFAULT_THEME=dark          # dark|light
 DEFAULT_AUTOPLAY=muted      # muted|off
 DEFAULT_VOLUME=1.0          # 0.0-1.0
-DEFAULT_LANGUAGE=pt         # pt|en
+DEFAULT_LANGUAGE=en         # en|pt
 ```
 
-## 📁 Estrutura
+## 📁 Structure
 ```
 tv-dashboard/
-├── index.html              # Interface principal
-├── favicon.ico             # Ícone do site
-├── css/styles.css          # Estilos
-├── js/                     # Scripts JavaScript
-│   ├── script.js           # Lógica principal
-│   ├── channels.js         # Gestão de canais
-│   ├── storage.js          # Armazenamento local
-│   └── config.js           # Configurações
-├── env.example             # Configurações completas
-├── docker-compose.yml      # Orquestração Docker
-├── Dockerfile              # Container nginx profissional
-├── Makefile                # Comandos automatizados
-└── dist/                   # Build (gerado)
+├── index.html              # Main interface
+├── favicon.ico             # Site icon
+├── css/styles.css          # Styles
+├── js/                     # JavaScript scripts
+│   ├── script.js           # Main logic
+│   ├── channels.js         # Channel management
+│   ├── storage.js          # Local storage
+│   └── config.js           # Configurations
+├── env.example             # Complete configurations
+├── docker-compose.yml      # Docker orchestration
+├── Dockerfile              # Professional nginx container
+├── Makefile                # Automated commands
+└── dist/                   # Build (generated)
 ```
 
-## 🎯 Funcionalidades
+## 🎯 Features
 
 ### 📺 **Core TV Features**
-- ✅ **Múltiplos streams** simultâneos (até 16)
-- ✅ **Canais pré-configurados** (PT, UK)
-- ✅ **Gestão completa** de canais customizados
-- ✅ **Controlo de áudio** individual
-- ✅ **Layouts flexíveis** (2x2, 3x3, 4x4)
+- ✅ **Multiple streams** simultaneous (up to 16)
+- ✅ **Pre-configured channels** (PT, UK)
+- ✅ **Complete management** of custom channels
+- ✅ **Individual audio control**
+- ✅ **Flexible layouts** (2x2, 3x3, 4x4)
 
-### 🔧 **Funcionalidades Profissionais**
-- ✅ **Headers de segurança** completos
-- ✅ **CORS configurável** para streams externos
-- ✅ **Cache otimizado** para performance
-- ✅ **Logs estruturados** e rotativos
-- ✅ **Health checks** automáticos
-- ✅ **Gzip compression** automática
-- ✅ **Suporte Traefik** para proxy reverso
+### 🔧 **Professional Features**
+- ✅ **Complete security headers**
+- ✅ **Configurable CORS** for external streams
+- ✅ **Optimized cache** for performance
+- ✅ **Structured and rotating logs**
+- ✅ **Automatic health checks**
+- ✅ **Automatic gzip compression**
+- ✅ **Traefik support** for reverse proxy
 
-### 🛡️ **Segurança**
-- ✅ **Headers XSS protection**
+### 🛡️ **Security**
+- ✅ **XSS protection headers**
 - ✅ **Content-Type sniffing protection**
-- ✅ **Frame options** configuráveis
-- ✅ **Server tokens** ocultos
-- ✅ **Access logs** detalhados
+- ✅ **Configurable frame options**
+- ✅ **Hidden server tokens**
+- ✅ **Detailed access logs**
 
-## 🚀 Deploy em Produção
+## 🚀 Production Deployment
 
-### 🐳 **Docker com Traefik**
+### 🐳 **Docker with Traefik**
 ```bash
-# Configurar no .env
+# Configure in .env
 TRAEFIK_ENABLE=true
 TRAEFIK_DOMAIN=tv.example.com
 
@@ -209,83 +185,55 @@ TRAEFIK_DOMAIN=tv.example.com
 make docker
 ```
 
-### ☁️ **Deploy em Nuvem**
-O projeto está configurado para deploy automático em plataformas de nuvem.
+### ☁️ **Cloud Deployment**
+The project is configured for automatic deployment on cloud platforms.
 
-### 🖥️ **Servidor Tradicional**
+### 🖥️ **Traditional Server**
 ```bash
-# 1. Copiar arquivos
+# 1. Copy files
 scp -r . user@server:/var/www/tv-dashboard/
 
 # 2. Deploy
 make docker
 ```
 
-## 📊 Monitoramento
+## 📊 Monitoring
 
 ### 🔍 **Health Check**
 ```bash
 make health
-# ou
+# or
 curl http://localhost:8080/health
 ```
 
-### 📝 **Logs**
+### 📈 **Debug**
 ```bash
-make logs           # Logs em tempo real
-make status         # Status + recursos
+make status         # View status
+make logs           # View logs
+make health         # Test health
 ```
 
-### 📈 **Testes Automáticos**
+### 🧹 **Cleanup**
 ```bash
-make test           # Teste completo:
-                    # - Página principal (200)
-                    # - Health endpoint (200) 
-                    # - Headers de segurança
+make clean          # Basic cleanup
+make clean-all      # Complete cleanup
 ```
 
-## 🎯 **Fluxos de Trabalho Comuns**
-
-### 👨‍💻 **Desenvolvimento**
-```bash
-make dev            # Desenvolvimento local
-# Editar código...
-make build          # Build para dist/
-```
-
-### 🚀 **Deploy Rápido**
-```bash
-make deploy         # Build + run + test automático
-```
-
-### 🐛 **Debug**
-```bash
-make status         # Ver status
-make logs           # Ver logs
-make health         # Testar saúde
-```
-
-### 🧹 **Limpeza**
-```bash
-make clean          # Limpeza básica
-make clean-all      # Limpeza completa
-```
-
-## 🌐 Demonstração Online
+## 🌐 Online Demo
 
 - **🔗 Site**: https://tv-dashboard.fly.dev/
-- **📱 Responsivo**: Funciona em desktop, tablet e mobile
-- **🔄 Atualização**: Site atualizado automaticamente
+- **📱 Responsive**: Works on desktop, tablet and mobile
+- **🔄 Updates**: Site updated automatically
 
-## 📝 Características Técnicas
+## 📝 Technical Features
 
-- **🎬 Otimizado para TV**: Configurações específicas para streaming
-- **⚡ Performance**: Otimizações de cache e compressão
-- **🔒 Segurança**: Headers de segurança implementados
-- **📦 Containerizado**: Suporte completo Docker
-- **🔧 Configurável**: Múltiplas opções de personalização
-- **🌐 Proxy-ready**: Suporte nativo para Traefik e nginx-proxy
-- **⚡ Makefile**: Automação completa de desenvolvimento e deploy
-
----
-*Sistema profissional de monitoramento de TV com automação total via Makefile.* 
+- **🎬 Optimized for TV**: Specific configurations for streaming
+- **⚡ Performance**: Cache and compression optimizations
+- **🔒 Security**: Security headers implemented
+- **📦 Containerized**: Complete Docker support
+- **🔧 Configurable**: Multiple customization options
+- **🌐 Proxy-ready**: Native support for Traefik and nginx-proxy
+- **⚡ Makefile**: Complete automation for development and deployment
+- **🔄 CI/CD**: GitHub Actions integration
+- **🌍 Global**: Worldwide accessibility
+- **📊 Monitoring**: Health checks and structured logs 

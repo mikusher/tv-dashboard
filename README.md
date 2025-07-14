@@ -1,6 +1,6 @@
 # 📺 TV Dashboard - Professional Edition
 
-Professional system for monitoring multiple TV channels with advanced server configurations and automatic deployment via GitHub Actions.
+System for monitoring multiple TV channels with advanced server configurations and automatic deployment via GitHub Actions.
 
 [![Deploy to Fly.io](https://github.com/mikusher/tv-dashboard/actions/workflows/deploy.yml/badge.svg)](https://github.com/mikusher/tv-dashboard/actions/workflows/deploy.yml)
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://tv-dashboard.fly.dev/)

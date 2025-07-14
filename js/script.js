@@ -826,14 +826,14 @@ function loadChannelList() {
         let actionButton = '';
         
         if (isDefault) {
-            const toggleLabel = isActive ? 'Desativar' : 'Ativar';
+            const toggleLabel = isActive ? 'Disabled' : 'Active';
             const toggleClass = isActive ? 'deactivate-channel-btn' : 'activate-channel-btn';
             actionButton = `<button class="${toggleClass}" onclick="toggleChannelStatus(${channel.id})">${toggleLabel}</button>`;
         } else {
             actionButton = `<button class="delete-channel-btn" onclick="deleteChannel(${channel.id})">Excluir</button>`;
         }
         
-        const statusText = isDefault ? (isActive ? '(Padrão - Ativo)' : '(Padrão - Desativado)') : '';
+        const statusText = isDefault ? (isActive ? '(Default - Active)' : '(Default - Disabled)') : '';
         const itemClass = !isActive ? 'channel-item-config inactive' : 'channel-item-config';
         channelItem.className = itemClass;
         

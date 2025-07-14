@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Dashboard - Multi Stream</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.18.1/video-js.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <button class="toggle-sidebar-header" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
+            <h1>📺 TV Dashboard</h1>
+        </div>
+        <div class="controls">
+            <button class="btn" onclick="openConfigModal()">⚙️ Configurações</button>
+            <button class="btn" onclick="toggleMaximizeAll()">Maximizar Tudo</button>
+        </div>
+    </header>
+
+    <!-- Modal de Configuração -->
+    <div class="config-modal" id="configModal">
+        <div class="config-content">
+            <div class="config-header">
+                <h2>⚙️ Configurações</h2>
+                <button class="config-close" onclick="closeConfigModal()">✕</button>
+            </div>
+            
+            <div class="config-tabs">
+                <button class="config-tab active" onclick="showConfigTab('channels')">Canais</button>
+                <button class="config-tab" onclick="showConfigTab('add')">Adicionar Canal</button>
+                <button class="config-tab" onclick="showConfigTab('settings')">Configurações</button>
+            </div>
+
+            <div class="config-body">
+                <!-- Painel de Canais -->
+                <div id="channels-panel" class="config-panel active">
+                    <h3>Gerenciar Canais</h3>
+                    <div class="channel-list" id="channelList">
+                        <!-- Canais serão listados aqui -->
+                    </div>
+                </div>
+
+                <!-- Painel de Adicionar Canal -->
+                <div id="add-panel" class="config-panel">
+                    <h3>Adicionar Novo Canal</h3>
+                    <form id="addChannelForm">
+                        <div class="form-group">
+                            <label>Nome do Canal:</label>
+                            <input type="text" id="channelName" placeholder="Ex: RTP1">
+                        </div>
+                        <div class="form-group">
+                            <label>URL do Stream:</label>
+                            <input type="text" id="channelUrl" placeholder="https://exemplo.com/stream.m3u8">
+                        </div>
+                        <div class="form-group">
+                            <label>País:</label>
+                            <input type="text" id="channelCountry" placeholder="Portugal">
+                        </div>
+                        <div class="form-group">
+                            <label>Categoria:</label>
+                            <select id="channelCategory">
+                                <option value="Notícias">Notícias</option>
+                                <option value="Generalistas">Generalistas</option>
+                                <option value="Esportes">Esportes</option>
+                                <option value="Entretenimento">Entretenimento</option>
+                                <option value="Documentários">Documentários</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Descrição (opcional):</label>
+                            <textarea id="channelDescription" placeholder="Descrição do canal..."></textarea>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button type="button" class="btn" onclick="addChannel()">Adicionar Canal</button>
+                            <button type="button" class="btn" onclick="clearChannelForm()" style="background: #6c757d;">Limpar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Painel de Configurações -->
+                <div id="settings-panel" class="config-panel">
+                    <h3>Configurações Gerais</h3>
+                    <div class="form-group">
+                        <label>Layout da Grade:</label>
+                        <select id="gridLayout" onchange="changeGridLayout()">
+                            <option value="4x4">4x4 (16 players)</option>
+                            <option value="3x3">3x3 (9 players)</option>
+                            <option value="2x2">2x2 (4 players)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Autoplay:</label>
+                        <select id="autoplayMode">
+                            <option value="muted">Autoplay Mutado</option>
+                            <option value="off">Desligado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tema:</label>
+                        <select id="themeMode" onchange="changeTheme()">
+                            <option value="dark">Escuro</option>
+                            <option value="light">Claro</option>
+                        </select>
+                    </div>
+                    
+                    <hr style="margin: 20px 0; border-color: #333;">
+                    
+                    <h3>Backup e Restauração</h3>
+                    <div class="form-group">
+                        <label>Gerenciar Dados:</label>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="btn" onclick="exportData()">📤 Exportar Dados</button>
+                            <button class="btn" onclick="importData()">📥 Importar Dados</button>
+                            <button class="btn" onclick="clearAllData()" style="background: #dc3545;">🗑️ Limpar Todos os Dados</button>
+                        </div>
+                    </div>
+                    
+                    <input type="file" id="importFileInput" accept=".json" style="display: none;" onchange="handleFileImport(event)">
+                </div>
+            </div>
+
+            <div class="config-actions">
+                <button class="btn" onclick="saveConfig()">Salvar Configurações</button>
+                <button class="btn" onclick="closeConfigModal()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>Canais Disponíveis</h3>
+            </div>
+
+            <div class="category-section">
+                <div class="category-title">🇵🇹 Portugal - Notícias</div>
+                <div class="channel-item" onclick="loadChannel('SIC Notícias', 'https://d277k9d1h9dro4.cloudfront.net/out/v1/293e7c3464824cbd8818ab8e49dc5fe9/index.m3u8', 'PT')">
+                    <div class="channel-flag">🇵🇹</div>
+                    <span>SIC Notícias</span>
+                </div>
+                <div class="channel-item" onclick="loadChannel('SIC', 'https://d1zx6l1dn8vaj5.cloudfront.net/out/v1/b89cc37caa6d418eb423cf092a2ef970/index_4.m3u8', 'PT')">
+                    <div class="channel-flag">🇵🇹</div>
+                    <span>SIC</span>
+                </div>
+                <div class="channel-item" onclick="loadChannel('CNN Portugal', 'https://video-auth8.iol.pt/live_cnn/live_cnn/playlist.m3u8', 'PT')">
+                    <div class="channel-flag">🇵🇹</div>
+                    <span>CNN Portugal</span>
+                </div> 
+                <div class="channel-item" onclick="loadChannel('RTP1', 'https://streaming-live.rtp.pt/liverepeater/smil:rtpClean1HD.smil/playlist.m3u8', 'PT')">
+                    <div class="channel-flag">🇵🇹</div>
+                    <span>RTP1</span>
+                </div>
+            </div>
+
+            <div class="category-section">
+                <div class="category-title">🇵🇹 Portugal - Generalistas</div>
+                <div class="channel-item" onclick="loadChannel('RTP2', 'https://streaming-live.rtp.pt/liverepeater/smil:rtp2HD.smil/playlist.m3u8', 'PT')">
+                    <div class="channel-flag">🇵🇹</div>
+                    <span>RTP2</span>
+                </div>
+                <div class="channel-item" onclick="loadChannel('SIC', 'https://d1zx6l1dn8vaj5.cloudfront.net/out/v1/b89cc37caa6d418eb423cf092a2ef970/index_4.m3u8', 'PT')">
+                    <div class="channel-flag">🇵🇹</div>
+                    <span>SIC</span>
+                </div>
+                <div class="channel-item" onclick="loadChannel('TVI', 'https://video-auth4.iol.pt/live_tvi/live_tvi/playlist.m3u8', 'PT')">
+                    <div class="channel-flag">🇵🇹</div>
+                    <span>TVI</span>
+                </div>
+            </div>
+
+            <div class="category-section">
+                <div class="category-title">🇬🇧 Reino Unido</div>
+                <div class="channel-item" onclick="loadChannel('BBC News', 'https://vs-hls-push-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/iptv_hd_abr_v1.m3u8', 'GB')">
+                    <div class="channel-flag">🇬🇧</div>
+                    <span>BBC News</span>
+                </div>
+                <div class="channel-item" onclick="loadChannel('Sky News', 'https://skynews2-plutolive-vo.akamaized.net/cdnlive2/sky-news-international/chunklist.m3u8', 'GB')">
+                    <div class="channel-flag">🇬🇧</div>
+                    <span>Sky News</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="grid-container">
+            <div class="grid" id="grid">
+                <!-- Player boxes serão adicionados dinamicamente -->
+            </div>
+        </main>
+    </div>
+
+    <div class="audio-control" id="audioControl">
+        🔇 Sem áudio ativo
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.18.1/video.min.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/channels.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

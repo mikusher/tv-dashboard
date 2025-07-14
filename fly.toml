@@ -1,0 +1,73 @@
+# Fly.io Deployment Configuration for TV Dashboard
+app = "tv-dashboard"
+primary_region = "fra"
+
+[build]
+
+[env]
+  APP_NAME = "TV Dashboard"
+  APP_VERSION = "2.0.0"
+  APP_ENV = "production"
+  APP_DEBUG = "false"
+  PORT = "8080"
+  
+  # Nginx Performance
+  NGINX_WORKER_PROCESSES = "auto"
+  NGINX_WORKER_CONNECTIONS = "1024"
+  NGINX_KEEPALIVE_TIMEOUT = "65"
+  NGINX_CLIENT_MAX_BODY_SIZE = "10m"
+  NGINX_GZIP_ENABLED = "true"
+  NGINX_GZIP_LEVEL = "6"
+  NGINX_GZIP_TYPES = "text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript"
+  
+  # Security Headers
+  NGINX_SECURITY_HEADERS = "true"
+  NGINX_XSS_PROTECTION = "1; mode=block"
+  NGINX_FRAME_OPTIONS = "SAMEORIGIN"
+  NGINX_CONTENT_TYPE_OPTIONS = "nosniff"
+  NGINX_REFERRER_POLICY = "strict-origin-when-cross-origin"
+  
+  # CORS for TV Streams
+  NGINX_CORS_ENABLED = "true"
+  NGINX_CORS_ORIGIN = "*"
+  NGINX_CORS_METHODS = "GET, HEAD, OPTIONS"
+  NGINX_CORS_HEADERS = "Origin, X-Requested-With, Content-Type, Accept, Range"
+  
+  # TV Stream Optimizations
+  NGINX_STREAM_TIMEOUT = "30s"
+  NGINX_STREAM_RETRIES = "3"
+  NGINX_STREAM_BUFFER_SIZE = "64k"
+  
+  # Cache Settings
+  NGINX_CACHE_ASSETS = "1y"
+  NGINX_CACHE_HTML = "no-cache"
+  NGINX_CACHE_CONTROL = "public, immutable"
+  
+  # Application Defaults
+  APP_DEFAULT_GRID = "4x4"
+  APP_DEFAULT_THEME = "dark"
+  APP_DEFAULT_AUTOPLAY = "muted"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    timeout = "5s"
+    path = "/health"
+
+[vm]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
+
+[[statics]]
+  guest_path = "/app"
+  url_prefix = "/" 
